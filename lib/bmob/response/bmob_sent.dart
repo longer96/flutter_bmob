@@ -1,13 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
-
 //此处与类名一致，由指令自动生成代码
 part 'bmob_sent.g.dart';
 
-
 @JsonSerializable()
-class BmobSent{
-  int smsId;
+class BmobSent {
+  int? smsId;
 
   BmobSent();
 
@@ -17,7 +15,4 @@ class BmobSent{
 
   //此处与类名一致，由指令自动生成代码
   Map<String, dynamic> toJson() => _$BmobSentToJson(this);
-
-
-
 }

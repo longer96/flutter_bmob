@@ -8,11 +8,11 @@ part of 'bmob_sms.dart';
 
 BmobSms _$BmobSmsFromJson(Map<String, dynamic> json) {
   return BmobSms()
-    ..mobilePhoneNumber = json['mobilePhoneNumber'] as String
-    ..template = json['template'] as String;
+    ..mobilePhoneNumber = json['mobilePhoneNumber'] as String?
+    ..template = json['template'] as String?;
 }
 
 Map<String, dynamic> _$BmobSmsToJson(BmobSms instance) => <String, dynamic>{
       'mobilePhoneNumber': instance.mobilePhoneNumber,
-      'template': instance.template
+      'template': instance.template,
     };
