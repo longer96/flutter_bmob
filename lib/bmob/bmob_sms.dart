@@ -17,7 +17,7 @@ class BmobSms {
 
   ///查询单条数据
   Future<BmobSent> sendSms() async {
-    Map responseData = await BmobDio.getInstance()
+    Map<String, dynamic> responseData = await BmobDio.getInstance()
         .post(Bmob.BMOB_API_SEND_SMS_CODE, data: getParams());
     BmobSent sent = BmobSent.fromJson(responseData);
     return sent;
@@ -27,7 +27,7 @@ class BmobSms {
   Future<BmobHandled> verifySmsCode(smsCode) async {
     Map params = getParams();
     params.remove("template");
-    Map responseData = await BmobDio.getInstance()
+    Map<String, dynamic> responseData = await BmobDio.getInstance()
         .post(Bmob.BMOB_API_VERIFY_SMS_CODE + smsCode, data: params);
     BmobHandled bmobHandled = BmobHandled.fromJson(responseData);
     return bmobHandled;

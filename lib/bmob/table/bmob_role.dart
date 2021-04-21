@@ -17,14 +17,14 @@ class BmobRole extends BmobObject {
 
   Map<String, dynamic> toJson(BmobRole instance) => _$BmobRoleToJson(instance);
 
-  String name;
-  Map<String, dynamic> roles;
-  Map<String, dynamic> users;
+  String? name;
+  Map<String, dynamic>? roles;
+  Map<String, dynamic>? users;
 
   BmobRole();
 
   @override
-  Map getParams() {
+  Map<String, dynamic> getParams() {
     // TODO: implement getParams
     return toJson(this);
   }

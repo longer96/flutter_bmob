@@ -8,8 +8,8 @@ part of bmobgeopoint;
 
 BmobGeoPoint _$BmobGeoPointFromJson(Map<String, dynamic> json) {
   return BmobGeoPoint()
-    ..latitude = (json['latitude'] as num).toDouble()
-    ..longitude = (json['longitude'] as num).toDouble()
+    ..latitude = (json['latitude'] as num?)?.toDouble()
+    ..longitude = (json['longitude'] as num?)?.toDouble()
     ..type = json['__type'] as String;
 }
 

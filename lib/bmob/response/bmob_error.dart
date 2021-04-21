@@ -29,23 +29,23 @@ class BmobError extends Error {
     } else if (e is DioError) {
       DioError dioError = e;
       switch (dioError.type) {
-        case DioErrorType.SEND_TIMEOUT:
+        case DioErrorType.sendTimeout:
           bmobError = BmobError(9015, dioError.message);
           break;
-        case DioErrorType.DEFAULT:
+        case DioErrorType.other:
           bmobError = BmobError(9015, dioError.message);
           break;
-        case DioErrorType.CANCEL:
+        case DioErrorType.cancel:
           bmobError = BmobError(9015, dioError.message);
           break;
-        case DioErrorType.RECEIVE_TIMEOUT:
+        case DioErrorType.receiveTimeout:
           bmobError = BmobError(9015, dioError.message);
           break;
-        case DioErrorType.RESPONSE:
-          bmobError = BmobError(
-              dioError.response.data['code'], dioError.response.data['error']);
+        case DioErrorType.response:
+          bmobError = BmobError(dioError.response!.data['code'],
+              dioError.response!.data['error']);
           break;
-        case DioErrorType.CONNECT_TIMEOUT:
+        case DioErrorType.connectTimeout:
           bmobError = BmobError(9015, dioError.message);
           break;
       }

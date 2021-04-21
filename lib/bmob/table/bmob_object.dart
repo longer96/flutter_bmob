@@ -15,41 +15,41 @@ import 'package:flutter_bmob/bmob/type/bmob_relation.dart';
 ///Bmob对象基本类型
 abstract class BmobObject {
   //创建时间
-  String createdAt;
+  String? createdAt;
 
   void setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
   }
 
-  String getCreatedAt() {
+  String? getCreatedAt() {
     return this.createdAt;
   }
 
   //更新时间
-  String updatedAt;
+  String? updatedAt;
 
   void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
 
-  String getUpdatedAt() {
+  String? getUpdatedAt() {
     return this.updatedAt;
   }
 
   //唯一标志
-  String objectId;
+  String? objectId;
 
   void setObjectId(String objectId) {
     this.objectId = objectId;
   }
 
-  String getObjectId() {
+  String? getObjectId() {
     return this.objectId;
   }
 
   //访问控制权限
   // ignore: non_constant_identifier_names
-  Map<String, Object> ACL;
+  Map<String, dynamic>? ACL;
 
   void setAcl(BmobAcl bmobAcl) {
     this.ACL = bmobAcl.acl;
@@ -57,13 +57,13 @@ abstract class BmobObject {
 
   BmobAcl getAcl() {
     BmobAcl bmobAcl = BmobAcl();
-    bmobAcl.acl = this.ACL;
+    bmobAcl.acl = this.ACL!;
     return bmobAcl;
   }
 
   BmobObject();
 
-  Map getParams();
+  Map<String, dynamic> getParams();
 
   ///新增一条数据
   Future<BmobSaved> save() async {
@@ -76,7 +76,7 @@ abstract class BmobObject {
         tableName = "_Installation";
         break;
     }
-    Map responseData = await BmobDio.getInstance()
+    Map<String, dynamic> responseData = await BmobDio.getInstance()
         .post(Bmob.BMOB_API_CLASSES + tableName, data: params);
     BmobSaved bmobSaved = BmobSaved.fromJson(responseData);
     return bmobSaved;
@@ -94,7 +94,7 @@ abstract class BmobObject {
       String params = getParamsJsonFromParamsMap(map);
       print(params);
       String tableName = BmobUtils.getTableName(this);
-      Map responseData = await BmobDio.getInstance().put(
+      Map<String, dynamic> responseData = await BmobDio.getInstance().put(
           Bmob.BMOB_API_CLASSES + tableName + Bmob.BMOB_API_SLASH + objectId,
           data: params);
       BmobUpdated bmobUpdated = BmobUpdated.fromJson(responseData);
@@ -112,7 +112,7 @@ abstract class BmobObject {
       throw bmobError;
     } else {
       String tableName = BmobUtils.getTableName(this);
-      Map responseData = await BmobDio.getInstance().delete(
+      Map<String, dynamic> responseData = await BmobDio.getInstance().delete(
           Bmob.BMOB_API_CLASSES + tableName + Bmob.BMOB_API_SLASH + objectId);
       BmobHandled bmobHandled = BmobHandled.fromJson(responseData);
       return bmobHandled;
@@ -134,7 +134,7 @@ abstract class BmobObject {
       Map<String, dynamic> params = Map();
       params[fieldName] = delete;
       String body = json.encode(params);
-      Map responseData = await BmobDio.getInstance().put(
+      Map<String, dynamic> responseData = await BmobDio.getInstance().put(
           Bmob.BMOB_API_CLASSES + tableName + Bmob.BMOB_API_SLASH + objectId,
           data: "$body");
       BmobUpdated bmobUpdated = BmobUpdated.fromJson(responseData);
@@ -160,7 +160,7 @@ abstract class BmobObject {
         if (value is BmobObject) {
           //Pointer类型
           BmobObject bmobObject = value;
-          String objectId = bmobObject.objectId;
+          String? objectId = bmobObject.objectId;
           if (objectId == null) {
             data.remove(key);
           } else {

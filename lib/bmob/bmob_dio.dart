@@ -15,13 +15,13 @@ import 'package:crypto/crypto.dart';
 //		md5(url + timeStamp + safeToken + noncestr+ sdkVersion)
 class BmobDio {
   ///网络请求框架
-  Dio dio;
+  late Dio dio;
 
   ///网络请求元素
-  BaseOptions options;
+  late BaseOptions options;
 
   ///单例
-  static BmobDio instance;
+  static BmobDio? instance;
 
   void setSessionToken(bmobSessionToken) {
     options.headers["X-Bmob-Session-Token"] = bmobSessionToken;
@@ -92,7 +92,7 @@ class BmobDio {
     if (instance == null) {
       instance = BmobDio();
     }
-    return instance;
+    return instance!;
   }
 
   ///GET请求
@@ -113,7 +113,7 @@ class BmobDio {
   }
 
   ///POST请求
-  Future<dynamic> upload(path, {Future<List<int>> data, cancelToken}) async {
+  Future<dynamic> upload(path, {Future<List<int>>? data, cancelToken}) async {
     options.headers.addAll(getHeaders(path, data));
 
     var requestUrl = options.baseUrl + path;
@@ -121,7 +121,7 @@ class BmobDio {
     print('Post请求启动! url：$requestUrl ,body: $data ,headers:$headers');
     Response response = await dio.post(
       requestUrl,
-      data: Stream.fromFuture(data),
+      data: Stream.fromFuture(data!),
       cancelToken: cancelToken,
     );
     print('Post请求结果：' + response.toString());

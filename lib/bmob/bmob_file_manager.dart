@@ -33,7 +33,7 @@ class BmobFileManager {
     String path = "${Bmob.BMOB_API_FILE_VERSION}${Bmob.BMOB_API_FILE}$fileName";
 
     //获取所上传文件的二进制流
-    Map responseData =
+    Map<String, dynamic> responseData =
         await BmobDio.getInstance().upload(path, data: file.readAsBytes());
     BmobFile bmobFile = BmobFile.fromJson(responseData);
     return bmobFile;
@@ -58,7 +58,8 @@ class BmobFileManager {
     String path =
         "${Bmob.BMOB_API_FILE_VERSION}${Bmob.BMOB_API_FILE}/upyun$fileUrl";
 
-    Map responseData = await BmobDio.getInstance().delete(path);
+    Map<String, dynamic> responseData =
+        await BmobDio.getInstance().delete(path);
     BmobHandled bmobHandled = BmobHandled.fromJson(responseData);
 
     return bmobHandled;

@@ -13,13 +13,13 @@ class BmobRelation {
   Map<String, dynamic> toJson() => _$BmobRelationToJson(this);
 
   @JsonKey(name: "__op")
-  String op;
+  String? op;
 
   //关联关系列表
-  List<Map<String, dynamic>> objects;
+  late List<Map<String, dynamic>> objects;
 
   BmobRelation() {
-    objects = List();
+    objects = [];
   }
 
   //添加某个关联关系

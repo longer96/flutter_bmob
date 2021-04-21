@@ -21,11 +21,11 @@ class BmobBatch {
   }
 
   Future<List> process(String method, List<BmobObject> bmobObjects) async {
-    List list = List();
+    List list = [];
     Map params = Map();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userJson = prefs.get("user");
+    String? userJson = prefs.getString("user");
     print(userJson);
     late BmobUser bmobUser;
     if (userJson != null) {
@@ -47,15 +47,15 @@ class BmobBatch {
           single["path"] = Bmob.BMOB_API_CLASSES +
               bmobObject.runtimeType.toString() +
               "/" +
-              bmobObject.objectId;
+              bmobObject.objectId!;
         } else {
           //批量添加
           single["path"] =
               Bmob.BMOB_API_CLASSES + bmobObject.runtimeType.toString();
         }
 
-        Map body = bmobObject.getParams();
-        Map tmp = bmobObject.getParams();
+        Map? body = bmobObject.getParams();
+        Map? tmp = bmobObject.getParams();
         tmp.forEach((key, value) {
           if (value == null) {
             body.remove(key);

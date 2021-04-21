@@ -5,10 +5,10 @@ part 'bmob_installation.g.dart';
 
 @JsonSerializable()
 class BmobInstallation extends BmobObject {
-  String deviceType = "android";
-  String installationId;
-  String timeZone;
-  String deviceToken;
+  String? deviceType = "android";
+  String? installationId;
+  String? timeZone;
+  String? deviceToken;
 
   BmobInstallation() {
     timeZone = "";
@@ -21,7 +21,7 @@ class BmobInstallation extends BmobObject {
   Map<String, dynamic> toJson() => _$BmobInstallationToJson(this);
 
   @override
-  Map getParams() {
+  Map<String, dynamic> getParams() {
     return toJson();
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_bmob/bmob/response/bmob_error.dart';
 import 'package:flutter_bmob/bmob/realtime/change.dart';
 
 class RealTimeDataManager {
-  static RealTimeDataManager instance;
+  static late RealTimeDataManager instance;
 
   RealTimeDataManager();
 

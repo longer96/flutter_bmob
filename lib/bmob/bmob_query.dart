@@ -17,29 +17,29 @@ part 'bmob_query.g.dart';
 ///查询数据，包括单条数据查询和多条数据查询
 @JsonSerializable()
 class BmobQuery<T> {
-  String include;
-  int limit;
-  int skip;
-  String order;
-  int count;
+  String? include;
+  int? limit;
+  int? skip;
+  String? order;
+  int? count;
 
-  String c;
+  String? c;
 
-  Map<String, dynamic> where;
+  late Map<String, dynamic> where;
 
-  Map<String, dynamic> having;
+  late Map<String, dynamic> having;
 
   /// 统计查询
-  String groupby;
-  String sum;
-  String average;
-  String max;
-  String min;
-  bool groupcount;
+  String? groupby;
+  String? sum;
+  String? average;
+  String? max;
+  String? min;
+  bool? groupcount;
 
   BmobQuery() {
-    where = Map();
-    having = Map();
+    where = {};
+    having = {};
   }
 
   //添加等于条件查询
@@ -80,7 +80,7 @@ class BmobQuery<T> {
 
   //复合查询条件or
   BmobQuery or(List<BmobQuery<T>> queries) {
-    List<Map<String, dynamic>> list = List();
+    List<Map<String, dynamic>> list = [];
     for (BmobQuery<T> bmobQuery in queries) {
       list.add(bmobQuery.where);
     }
@@ -90,7 +90,7 @@ class BmobQuery<T> {
 
   //复合查询条件and
   BmobQuery and(List<BmobQuery<T>> queries) {
-    List<Map<String, dynamic>> list = List();
+    List<Map<String, dynamic>> list = [];
     for (BmobQuery<T> bmobQuery in queries) {
       list.add(bmobQuery.where);
     }
@@ -99,7 +99,7 @@ class BmobQuery<T> {
   }
 
   BmobQuery addWhereContains(String key, Object value) {
-    String regex = "\\Q" + value + "\\E";
+    String regex = "\\Q" + value.toString() + "\\E";
     addWhereMatches(key, regex);
     return this;
   }
@@ -170,10 +170,11 @@ class BmobQuery<T> {
     if (where.isNotEmpty) {
       url = url + "where=" + json.encode(where);
     }
-    Map map = await BmobDio.getInstance().get(url, data: getParams());
+    Map<String, dynamic> map =
+        await BmobDio.getInstance().get(url, data: getParams());
     print(map);
     BmobResults bmobResults = BmobResults.fromJson(map);
-    return bmobResults.count;
+    return bmobResults.count ?? 0;
   }
 
   ///添加分组过滤条件
@@ -182,7 +183,7 @@ class BmobQuery<T> {
     return this;
   }
 
-  String addStatistics(String key, Object value) {
+  String addStatistics(String key, Object? value) {
     if (value == null) {
       return "";
     }
@@ -211,7 +212,7 @@ class BmobQuery<T> {
     return statistics;
   }
 
-  void addCondition(String key, String condition, Object value) {
+  void addCondition(String key, String? condition, Object value) {
     if (condition == null) {
       if (value is BmobUser) {
         BmobUser bmobUser = value;
@@ -346,10 +347,11 @@ class BmobQuery<T> {
       url = url + "where=" + json.encode(where);
     }
     url = url + getStatistics();
-    Map map = await BmobDio.getInstance().get(url, data: getParams());
+    Map<String, dynamic> map =
+        await BmobDio.getInstance().get(url, data: getParams());
     BmobResults bmobResults = BmobResults.fromJson(map);
     print(bmobResults.results);
-    return bmobResults.results;
+    return bmobResults.results ?? [];
   }
 
   ///此处与类名一致，由指令自动生成代码

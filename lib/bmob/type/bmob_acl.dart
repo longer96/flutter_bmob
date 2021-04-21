@@ -4,11 +4,11 @@ class BmobAcl {
   static const String READ = "read";
   static const String WRITE = "write";
 
-  Map<String, dynamic> acl = Map();
+  late Map<String, dynamic> acl = {};
 
   BmobAcl();
 
-  void addAccess(String accessType, String userIdOrRoleName, bool allowed) {
+  void addAccess(String accessType, String? userIdOrRoleName, bool allowed) {
     if (userIdOrRoleName == null || userIdOrRoleName.isEmpty) {
       throw BmobError(1001, "The userId is null or empty.");
     }
