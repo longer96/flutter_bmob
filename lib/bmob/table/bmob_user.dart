@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bmob/bmob/response/bmob_handled.dart';
 
 import 'bmob_object.dart';
@@ -79,7 +80,7 @@ class BmobUser extends BmobObject {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 //    prefs.setString("user", result.toString());
     prefs.setString("user", json.encode(bmobUser));
-    print(result.toString());
+    debugPrint(result.toString());
 
     BmobDio.getInstance().setSessionToken(bmobUser.sessionToken);
     return bmobUser;
@@ -105,7 +106,7 @@ class BmobUser extends BmobObject {
     //发送请求
     Map<String, dynamic> result = await BmobDio.getInstance()
         .post(Bmob.BMOB_API_USERS, data: getParamsJsonFromParamsMap(data));
-    print(result);
+    debugPrint(result.toString());
     BmobUser bmobUser = BmobUser.fromJson(result);
     BmobDio.getInstance().setSessionToken(bmobUser.sessionToken);
     return bmobUser;
@@ -131,7 +132,7 @@ class BmobUser extends BmobObject {
     Map<String, dynamic> result = await BmobDio.getInstance().post(
         Bmob.BMOB_API_REQUEST_PASSWORD_RESET,
         data: getParamsJsonFromParamsMap(data));
-    print(result);
+    debugPrint(result.toString());
     BmobHandled bmobHandled = BmobHandled.fromJson(result);
     return bmobHandled;
   }
@@ -158,7 +159,7 @@ class BmobUser extends BmobObject {
             Bmob.BMOB_API_SLASH +
             smsCode,
         data: getParamsJsonFromParamsMap(data));
-    print(result);
+    debugPrint(result.toString());
     BmobHandled bmobHandled = BmobHandled.fromJson(result);
     return bmobHandled;
   }
@@ -173,7 +174,7 @@ class BmobUser extends BmobObject {
     //发送请求
     Map<String, dynamic> result = await BmobDio.getInstance()
         .post(Bmob.BMOB_API_REQUEST_REQUEST_EMAIL_VERIFY, data: data);
-    print(result);
+    debugPrint(result.toString());
     BmobHandled bmobHandled = BmobHandled.fromJson(result);
     return bmobHandled;
   }
@@ -202,7 +203,7 @@ class BmobUser extends BmobObject {
     Map<String, dynamic> result = await BmobDio.getInstance().put(
         Bmob.BMOB_API_REQUEST_UPDATE_USER_PASSWORD + objectId!,
         data: getParamsJsonFromParamsMap(data));
-    print(result);
+    debugPrint(result.toString());
     BmobHandled bmobHandled = BmobHandled.fromJson(result);
     return bmobHandled;
   }

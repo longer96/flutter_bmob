@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bmob/bmob/bmob.dart';
 import 'package:flutter_bmob/bmob/table/bmob_object.dart';
 import 'package:flutter_bmob/bmob/table/bmob_user.dart';
@@ -26,7 +27,7 @@ class BmobBatch {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userJson = prefs.getString("user");
-    print(userJson);
+    debugPrint(userJson);
     late BmobUser bmobUser;
     if (userJson != null) {
       bmobUser = json.decode(userJson);
@@ -35,7 +36,7 @@ class BmobBatch {
     for (BmobObject bmobObject in bmobObjects) {
       if (bmobObject is BmobUser) {
         //过滤BmobUser类型的处理，因为批处理操作不支持对User表的操作
-        print("BmobUser does not support batch operations");
+        debugPrint("BmobUser does not support batch operations");
       } else {
         Map single = Map();
         single["method"] = method;
@@ -71,12 +72,12 @@ class BmobBatch {
       }
     }
     params["requests"] = list;
-    print(params.toString());
+    debugPrint(params.toString());
 
     List responseData =
         await BmobDio.getInstance().post(Bmob.BMOB_API_BATCH, data: params);
 
-    print(responseData.toString());
+    debugPrint(responseData.toString());
 
     return list;
   }

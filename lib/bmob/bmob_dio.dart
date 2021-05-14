@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'bmob.dart';
 
 import 'dart:convert';
@@ -55,7 +56,7 @@ class BmobDio {
     for (var i = 0; i < length; i++) {
       left = left + alphabet[Random().nextInt(alphabet.length)];
     }
-    print(left);
+    debugPrint(left);
     return left;
   }
 
@@ -67,9 +68,9 @@ class BmobDio {
         nonceStrKey +
         data.toString() +
         Bmob.bmobSDKVersion;
-    print(origin);
+    debugPrint(origin);
     var md5 = generateMd5(origin);
-    print(md5);
+    debugPrint(md5);
     return md5;
   }
 
@@ -83,7 +84,7 @@ class BmobDio {
   ///获取时间戳 秒
   getSafeTimestamp() {
     int second = (new DateTime.now().millisecondsSinceEpoch) ~/ 1000;
-    print(second);
+    debugPrint(second.toString());
     return second.toString();
   }
 
@@ -101,14 +102,14 @@ class BmobDio {
 
     var requestUrl = options.baseUrl + path;
     var headers = options.headers.toString();
-    print('Get请求启动! url：$requestUrl ,body: $data ,headers:$headers');
+    debugPrint('Get请求启动! url：$requestUrl ,body: $data ,headers:$headers');
     Response response = await dio.get(
       requestUrl,
       queryParameters: data,
       cancelToken: cancelToken,
     );
 
-    print('Get请求结果：' + response.toString());
+    debugPrint('Get请求结果：' + response.toString());
     return response.data;
   }
 
@@ -118,13 +119,13 @@ class BmobDio {
 
     var requestUrl = options.baseUrl + path;
     var headers = options.headers.toString();
-    print('Post请求启动! url：$requestUrl ,body: $data ,headers:$headers');
+    debugPrint('Post请求启动! url：$requestUrl ,body: $data ,headers:$headers');
     Response response = await dio.post(
       requestUrl,
       data: Stream.fromFuture(data!),
       cancelToken: cancelToken,
     );
-    print('Post请求结果：' + response.toString());
+    debugPrint('Post请求结果：' + response.toString());
 
     return response.data;
   }
@@ -135,13 +136,13 @@ class BmobDio {
 
     var requestUrl = options.baseUrl + path;
     var headers = options.headers.toString();
-    print('Post请求启动! url：$requestUrl ,body: $data ,headers:$headers');
+    debugPrint('Post请求启动! url：$requestUrl ,body: $data ,headers:$headers');
     Response response = await dio.post(
       requestUrl,
       data: data,
       cancelToken: cancelToken,
     );
-    print('Post请求结果：' + response.toString());
+    debugPrint('Post请求结果：' + response.toString());
     return response.data;
   }
 
@@ -154,10 +155,10 @@ class BmobDio {
     options.headers.addAll(getHeaders(path, ""));
 
     var requestUrl = options.baseUrl + path;
-    print('Delete请求启动! url：$requestUrl ,body: $data');
+    debugPrint('Delete请求启动! url：$requestUrl ,body: $data');
     Response response =
         await dio.delete(requestUrl, data: data, cancelToken: cancelToken);
-    print('Delete请求结果：' + response.toString());
+    debugPrint('Delete请求结果：' + response.toString());
     return response.data;
   }
 
@@ -166,10 +167,10 @@ class BmobDio {
     options.headers.addAll(getHeaders(path, data));
 
     var requestUrl = options.baseUrl + path;
-    print('Put请求启动! url：$requestUrl ,body: $data');
+    debugPrint('Put请求启动! url：$requestUrl ,body: $data');
     Response response =
         await dio.put(requestUrl, data: data, cancelToken: cancelToken);
-    print('Put请求结果：' + response.toString());
+    debugPrint('Put请求结果：' + response.toString());
     return response.data;
   }
 
@@ -178,13 +179,13 @@ class BmobDio {
     options.headers.addAll(getHeaders(requestUrl, data));
 
     var headers = options.headers.toString();
-    print('Get请求启动! url：$requestUrl ,body: $data ,headers:$headers');
+    debugPrint('Get请求启动! url：$requestUrl ,body: $data ,headers:$headers');
     Response response = await dio.get(
       requestUrl,
       queryParameters: data,
       cancelToken: cancelToken,
     );
-    print('Get请求结果：' + response.toString());
+    debugPrint('Get请求结果：' + response.toString());
     return response.data;
   }
 
@@ -215,7 +216,7 @@ class BmobDio {
           getSafeSign(path, nonceStrKey, safeTimeStamp, data);
     } else {
       //没有初始化
-      print("请先进行SDK的初始化，再进行网络请求。");
+      debugPrint("请先进行SDK的初始化，再进行网络请求。");
     }
 
     map["Content-Type"] = "application/json";

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bmob/bmob/bmob_dio.dart';
 import 'package:flutter_bmob/bmob/response/bmob_results.dart';
 import 'package:flutter_bmob/bmob/table/bmob_installation.dart';
@@ -172,7 +173,7 @@ class BmobQuery<T> {
     }
     Map<String, dynamic> map =
         await BmobDio.getInstance().get(url, data: getParams());
-    print(map);
+    debugPrint(map.toString());
     BmobResults bmobResults = BmobResults.fromJson(map);
     return bmobResults.count ?? 0;
   }
@@ -350,7 +351,7 @@ class BmobQuery<T> {
     Map<String, dynamic> map =
         await BmobDio.getInstance().get(url, data: getParams());
     BmobResults bmobResults = BmobResults.fromJson(map);
-    print(bmobResults.results);
+    debugPrint(bmobResults.results.toString());
     return bmobResults.results ?? [];
   }
 

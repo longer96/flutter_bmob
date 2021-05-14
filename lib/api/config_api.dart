@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bmob/bmob/bmob_query.dart';
 import 'package:flutter_bmob/bmob/response/bmob_error.dart';
 import 'package:flutter_bmob/entity/config_entity.dart';
@@ -11,7 +12,7 @@ class ConfigApi {
     BmobQuery query = BmobQuery();
     List r = await query.queryObjectsByTableName('Config');
 
-    print('longer   >>> ${r}');
+    debugPrint('longer   >>> $r');
 
     var rr = JsonConvert.fromJsonAsT<List<Config>>(r);
 
@@ -25,15 +26,5 @@ class ConfigApi {
     Config blog = Config().fromJson(r);
 
     return blog;
-
-    //     .then((data) {
-    //   Config blog = Config.fromJson(data);
-    //   print('longer   查询一条数据成功 >>> ${blog.key}');
-    //   return data;
-    // }).catchError((e) {
-    //   // showError(context, BmobError.convert(e).error);
-    //   print('longer 出错  >>> ${BmobError.convert(e).error}');
-    //   return BmobError.convert(e).error;
-    // });
   }
 }

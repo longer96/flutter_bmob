@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bmob/bmob/bmob_dio.dart';
 import 'dart:convert';
 import 'package:flutter_bmob/bmob/bmob.dart';
@@ -69,7 +70,7 @@ abstract class BmobObject {
   Future<BmobSaved> save() async {
     Map<String, dynamic> map = getParams();
     String params = getParamsJsonFromParamsMap(map);
-    print(params);
+    debugPrint(params);
     String tableName = BmobUtils.getTableName(this);
     switch (tableName) {
       case "BmobInstallation":
@@ -92,7 +93,7 @@ abstract class BmobObject {
       throw bmobError;
     } else {
       String params = getParamsJsonFromParamsMap(map);
-      print(params);
+      debugPrint(params);
       String tableName = BmobUtils.getTableName(this);
       Map<String, dynamic> responseData = await BmobDio.getInstance().put(
           Bmob.BMOB_API_CLASSES + tableName + Bmob.BMOB_API_SLASH + objectId,
@@ -147,7 +148,7 @@ abstract class BmobObject {
     Map<String, dynamic> data = new Map();
     //去除由服务器生成的字段值
     if (map == null) {
-      print("请先在继承类中实现BmobObject中的Map getParams()方法！");
+      debugPrint("请先在继承类中实现BmobObject中的Map getParams()方法！");
     }
     map.remove(Bmob.BMOB_PROPERTY_OBJECT_ID);
     map.remove(Bmob.BMOB_PROPERTY_CREATED_AT);
