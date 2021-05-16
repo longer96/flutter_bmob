@@ -3,6 +3,7 @@ import 'package:flutter_bmob/bmob/bmob_dio.dart';
 import 'package:flutter_bmob/bmob/response/bmob_results.dart';
 import 'package:flutter_bmob/bmob/table/bmob_installation.dart';
 import 'package:flutter_bmob/bmob/table/bmob_role.dart';
+import 'package:flutter_bmob/entity/user_entity.dart';
 
 import 'dart:convert';
 
@@ -161,7 +162,7 @@ class BmobQuery<T> {
     this.limit = 0;
 
     String tableName = T.toString();
-    if (T.runtimeType is BmobUser) {
+    if (T.runtimeType is User) {
       tableName = "_User";
     } else if (T.runtimeType is BmobInstallation) {
       tableName = "_Installation";
@@ -171,8 +172,7 @@ class BmobQuery<T> {
     if (where.isNotEmpty) {
       url = url + "where=" + json.encode(where);
     }
-    Map<String, dynamic> map =
-        await BmobDio.getInstance().get(url, data: getParams());
+    Map<String, dynamic> map = await BmobDio.getInstance().get(url, data: getParams());
     debugPrint(map.toString());
     BmobResults bmobResults = BmobResults.fromJson(map);
     return bmobResults.count ?? 0;
@@ -215,8 +215,8 @@ class BmobQuery<T> {
 
   void addCondition(String key, String? condition, Object value) {
     if (condition == null) {
-      if (value is BmobUser) {
-        BmobUser bmobUser = value;
+      if (value is User) {
+        User bmobUser = value;
         Map<String, dynamic> map = new Map();
         map["__type"] = "Pointer";
         map["objectId"] = bmobUser.objectId;
@@ -237,8 +237,8 @@ class BmobQuery<T> {
         where[key] = value;
       }
     } else {
-      if (value is BmobUser) {
-        BmobUser bmobUser = value;
+      if (value is User) {
+        User bmobUser = value;
         Map<String, dynamic> map = new Map();
         map["__type"] = "Pointer";
         map["objectId"] = bmobUser.objectId;
@@ -308,14 +308,13 @@ class BmobQuery<T> {
   ///查询单条数据
   Future<dynamic> queryObjectByTableName(objectId, String tableName) async {
 //    String tableName = T.toString();
-//    if (T.runtimeType is BmobUser) {
+//    if (T.runtimeType is User) {
 //      tableName = "_User";
 //    } else if (T.runtimeType is BmobInstallation) {
 //      tableName = "_Installation";
 //    }
-    return BmobDio.getInstance().get(
-        Bmob.BMOB_API_CLASSES + tableName + Bmob.BMOB_API_SLASH + objectId,
-        data: getParams());
+    return BmobDio.getInstance()
+        .get(Bmob.BMOB_API_CLASSES + tableName + Bmob.BMOB_API_SLASH + objectId, data: getParams());
   }
 
   ///查询多条数据
@@ -337,7 +336,7 @@ class BmobQuery<T> {
   ///查询多条数据
   Future<List<dynamic>> queryObjectsByTableName(String tableName) async {
 //    String tableName = T.toString();
-//    if (T.runtimeType is BmobUser) {
+//    if (T.runtimeType is User) {
 //      tableName = "_User";
 //    } else if (T.runtimeType is BmobInstallation) {
 //      tableName = "_Installation";
@@ -348,16 +347,14 @@ class BmobQuery<T> {
       url = url + "where=" + json.encode(where);
     }
     url = url + getStatistics();
-    Map<String, dynamic> map =
-        await BmobDio.getInstance().get(url, data: getParams());
+    Map<String, dynamic> map = await BmobDio.getInstance().get(url, data: getParams());
     BmobResults bmobResults = BmobResults.fromJson(map);
     debugPrint(bmobResults.results.toString());
     return bmobResults.results ?? [];
   }
 
   ///此处与类名一致，由指令自动生成代码
-  factory BmobQuery.fromJson(Map<String, dynamic> json) =>
-      _$BmobQueryFromJson(json);
+  factory BmobQuery.fromJson(Map<String, dynamic> json) => _$BmobQueryFromJson(json);
 
   ///此处与类名一致，由指令自动生成代码
   Map<String, dynamic> toJson() => _$BmobQueryToJson(this);
