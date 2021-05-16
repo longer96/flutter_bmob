@@ -3,7 +3,7 @@ import 'package:flutter_bmob/bmob/bmob_dio.dart';
 import 'package:flutter_bmob/bmob/response/bmob_results.dart';
 import 'package:flutter_bmob/bmob/table/bmob_installation.dart';
 import 'package:flutter_bmob/bmob/table/bmob_role.dart';
-import 'package:flutter_bmob/entity/user_entity.dart';
+import 'package:flutter_bmob/entity/user.dart';
 
 import 'dart:convert';
 
@@ -162,7 +162,7 @@ class BmobQuery<T> {
     this.limit = 0;
 
     String tableName = T.toString();
-    if (T.runtimeType is User) {
+    if (T.runtimeType is BUser) {
       tableName = "_User";
     } else if (T.runtimeType is BmobInstallation) {
       tableName = "_Installation";
@@ -215,8 +215,8 @@ class BmobQuery<T> {
 
   void addCondition(String key, String? condition, Object value) {
     if (condition == null) {
-      if (value is User) {
-        User bmobUser = value;
+      if (value is BUser) {
+        BUser bmobUser = value;
         Map<String, dynamic> map = new Map();
         map["__type"] = "Pointer";
         map["objectId"] = bmobUser.objectId;
@@ -237,8 +237,8 @@ class BmobQuery<T> {
         where[key] = value;
       }
     } else {
-      if (value is User) {
-        User bmobUser = value;
+      if (value is BUser) {
+        BUser bmobUser = value;
         Map<String, dynamic> map = new Map();
         map["__type"] = "Pointer";
         map["objectId"] = bmobUser.objectId;

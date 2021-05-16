@@ -10,7 +10,7 @@ class JSONField {
 
   //Whether to participate in toJson
   final bool? serialize;
-
+  
   //Whether to participate in fromMap
   final bool? deserialize;
 
