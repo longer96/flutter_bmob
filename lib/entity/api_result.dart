@@ -6,6 +6,8 @@ class ApiResult<T> {
   final String? msg;
   final bool success;
 
+  get failure => !success;
+
   ApiResult(
     this.success, {
     this.data,

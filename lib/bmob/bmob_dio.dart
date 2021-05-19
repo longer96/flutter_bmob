@@ -68,7 +68,7 @@ class BmobDio {
         nonceStrKey +
         data.toString() +
         Bmob.bmobSDKVersion;
-    debugPrint(origin);
+    debugPrint('加密之前：$origin');
     var md5 = generateMd5(origin);
     debugPrint(md5);
     return md5;
@@ -167,7 +167,8 @@ class BmobDio {
     options.headers.addAll(getHeaders(path, data));
 
     var requestUrl = options.baseUrl + path;
-    debugPrint('Put请求启动! url：$requestUrl ,body: $data');
+    var headers = options.headers.toString();
+    debugPrint('Put请求启动! url：$requestUrl ,body: $data ,headers:$headers');
     Response response =
         await dio.put(requestUrl, data: data, cancelToken: cancelToken);
     debugPrint('Put请求结果：' + response.toString());
